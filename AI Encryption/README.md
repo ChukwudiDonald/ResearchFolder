@@ -1,18 +1,16 @@
-# Concept Note: Context-Adaptive Symbol-Mask Encryption
+## Concept Note  
+A summary of the idea, its motivation, and practical considerations.  
 
-A summary of the idea, its motivation, and practical considerations.
+### Motivation  
+Modern encryption standards—such as AES, RSA, and others—reliably perform mathematical operations on the numeric representations of alphabetic characters. The most widely used mapping system, ASCII (American Standard Code for Information Interchange), facilitates seamless global data exchange with clarity and efficiency. However, ASCII was designed for standardization, not cryptography.  
 
-## 1. Why I started thinking about this
+If the core objective of encryption is to render plain information unrecognizable, why rely on a mapping system intended for the opposite purpose?  
 
-Modern encryption (AES, ChaCha20, etc.) reliably hides values, but it still begins with the public ASCII (or Unicode) mapping. This mapping preserves:
+**Key Limitations of Conventional Mapping:**  
+- **Fixed one-to-one character-to-code correspondence** (e.g., `a=97`, `b=98`, `c=99`)—this simplicity enables frequency analysis attacks.  
+- **Predictable ciphertext structure**—common di-grams and tri-grams persist, leaving patterns exploitable by statistical methods.  
 
-* *Fixed one-to-one codes:* "a" is always 97, "b" is 98, and so on.
-* *Predictable text structure:* spaces, punctuation, typical digram/trigram patterns.
-
-I wondered: What if we distort that ground layer before any standard cipher is applied?
-
-If each byte could mean several different characters depending on context, frequency analysis and "known-plaintext" style guessing would become much harder, even without heavy cryptography.
-
+This project explores an alternative approach: distorting the foundational mapping layer *before* applying standard encryption. By leveraging **deep learning sequence models**, we automate the reconstruction of the original message, enhancing security through non-deterministic encoding.  
 ## 2. The Core Idea
 
 * *Primary symbol set:* a–z, A–Z (52 single-character symbols).
